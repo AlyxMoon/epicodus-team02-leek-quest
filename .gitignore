@@ -231,4 +231,14 @@ _Pvt_Extensions
 # FAKE - F# Make
 .fake/
 
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
 appsettings.json
+node_modules/
