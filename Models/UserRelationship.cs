@@ -10,9 +10,9 @@ namespace LeekQuest.Models
     // {
     //   this.JoinEntities = new HashSet<FlavorTreat>();
     // }
-
-    public int User1Id { get; set; }
-    public int User2Id { get; set; }
+    public int UserRelationshipId { get; set; }
+    public string User1Id { get; set; }
+    public string User2Id { get; set; }
     public int NumNice { get; set; }
     public int NumMean { get; set; }
     public virtual User User { get; set; }
