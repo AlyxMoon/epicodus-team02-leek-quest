@@ -1,31 +1,24 @@
-<template>
-  <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
-  <!-- <HelloWorld msg="Welcome to Your Vue.js App"/> -->
-  <div>
-    <MyLeek />
-  </div>
+r<template>
+  <h1>Application</h1>
 
+  <nav>
+    <router-link to="/">Home</router-link>
+    <router-link to="/game">Game</router-link>
+    <router-link to="/register">Register</router-link>
+    <router-link to="/login">Log In</router-link>
+  </nav>
+  
+  <router-view />
 </template>
 
 <script>
-// import HelloWorld from './components/HelloWorld.vue'
-import MyLeek from './components/MyLeek.vue'
-
 export default {
   name: 'App',
-  components: {
-    // HelloWorld,
-    MyLeek,
-  }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  color: #2c3e50;
-  margin-top: 60px;
+a {
+  margin-right: 15px;
 }
 </style>
