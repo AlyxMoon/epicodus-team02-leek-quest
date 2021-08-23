@@ -4,9 +4,9 @@
 
   <form @submit.prevent="handleFormSubmit">
     <label>username</label>
-    <input type="text" v-model="username" />
+    <input type="text" class="margin" v-model="username" />
     <label>password</label>
-    <input type="text" v-model="password" />
+    <input type="text" class="margin" v-model="password" />
     <button type="submit" class="btn">Register!</button>
   </form>
 </template>
@@ -35,5 +35,7 @@ export default {
 </script>
 
 <style scoped>
-
+.margin {
+  margin: 0 8px;
+}
 </style>
