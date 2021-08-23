@@ -6,12 +6,13 @@
     <label>username</label>
     <input type="text" v-model="username" />
     <label>password</label>
-    <input type"text" v-model="password" />
+    <input type="text" v-model="password" />
+    <button type="submit" class="btn">Log In</button>
   </form>
 </template>
 
 <script>
-import { applicationUser } from '../lib/api'
+import { loginUser } from '../lib/api'
 
 export default {
   name: 'LoginPage',
@@ -20,16 +21,15 @@ export default {
     password: '',
   }),
   methods: {
-    handleFormSubmit () {
-      this.loginUser(username, password) {
-        if (response['result'] === 'success') {
-          this.$router.push('/game')
-        } else if (response['result'] === 'error') {
-          console.log(`There was an error: ${response['error']}`);
-        } else {
-          console.log(`There was an error: Invalid Input`);
-        },
-      },
+    async handleFormSubmit () {
+      let response = await loginUser(this.username, this.password);
+      console.log(response)
+      console.log('hello- are we leeking?');
+      if (response['success']) {
+        this.$router.push('/game')
+      } else {
+        console.log(`There was an error: Invalid Input`);
+      }
     },
   },
 }

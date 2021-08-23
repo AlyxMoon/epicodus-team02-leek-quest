@@ -6,7 +6,8 @@
     <label>username</label>
     <input type="text" v-model="username" />
     <label>password</label>
-    <input type"text" v-model="password" />
+    <input type="text" v-model="password" />
+    <button type="submit" class="btn">Register!</button>
   </form>
 </template>
 
@@ -21,15 +22,13 @@ export default {
   }),
   methods: {
 
-    handleFormSubmit () {
-      this.registerUser(username, password) {
-        if (response['result'] === 'success') {
-          this.$router.push('/login')
-        } else if (response['result'] === 'error') {
-          console.log(`There was an error: ${response['error']}`);
-        } else {
-          console.log(`There was an error: Invalid Input`);
-      },
+    async handleFormSubmit () {
+      let response = await registerUser(this.username, this.password);
+      if (response['success']) {
+        this.$router.push('/login')
+      } else {
+        console.log(`There was an error: Invalid Input`);
+      }
     },
   },
 }
