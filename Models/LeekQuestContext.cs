@@ -3,9 +3,10 @@ using Microsoft.EntityFrameworkCore;
 
 namespace LeekQuest.Models
 {
-  public class LeekQuestContext : IdentityDbContext<ApplicationUser>
+  public class LeekQuestContext : IdentityDbContext<User>
   {
-    public virtual DbSet<ApplicationUser> Users { get; set; }
+    // public override DbSet<User> Users { get; set; }
+    // Roles, UserRoles, Users
     public DbSet<ChatMessage> ChatMessages { get; set; }
     public DbSet<UserRelationship> UserRelationships { get; set; }
 
