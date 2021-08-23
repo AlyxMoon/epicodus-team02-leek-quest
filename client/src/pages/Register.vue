@@ -24,7 +24,10 @@ export default {
       this.registerUser(username, password) {
         if (response['result'] === 'success') {
           return blah;
-        },
+        } else if (response['result'] === 'error') {
+          return (`There was an error: @{response['error']}`);
+        } else {
+          return (`There was an error: Invalid Input`);
       },
     },
   },
