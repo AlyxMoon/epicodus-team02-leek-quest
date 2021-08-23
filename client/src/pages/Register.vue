@@ -9,7 +9,7 @@
 </template>
 
 <script>
-import { registerUser } from '../lib/api'
+// import { registerUser } from '../lib/api'
 
 export default {
   name: 'RegisterPage',
