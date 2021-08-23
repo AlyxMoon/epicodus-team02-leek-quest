@@ -3,8 +3,6 @@
   <p>New user, Welcome!</p>
 
   <form @submit.prevent="handleFormSubmit">
-    <label>email</label>
-    <input type="text" v-model="email" />
     <label>username</label>
     <input type="text" v-model="username" />
     <label>password</label>
@@ -20,14 +18,14 @@ export default {
   data: () => ({
     username: '',
     password: '',
-    email: '',
   }),
   methods: {
     handleFormSubmit () {
-      this.username
-      this.password
-      this.email
-      this.registerUser()
+      this.registerUser(username, password) {
+        if (response['result'] === 'success') {
+          return blah;
+        },
+      },
     },
   },
 }

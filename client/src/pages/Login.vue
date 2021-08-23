@@ -20,10 +20,13 @@ export default {
     password: '',
   }),
   methods: {
+
     handleFormSubmit () {
-      this.username
-      this.password
-      this.applicationUser()
+      this.applicationUser(username, password) {
+        if (response['result'] === 'success') {
+          return blah; 
+        },
+      },
     },
   },
 }
