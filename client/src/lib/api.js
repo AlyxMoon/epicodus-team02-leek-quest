@@ -4,3 +4,9 @@ export const registerUser = async (userInfo) => {
     success: true
   }
 }
+
+export const applicationUser = async (userInfo) => {  
+  return {
+    success: true
+  }
+}
