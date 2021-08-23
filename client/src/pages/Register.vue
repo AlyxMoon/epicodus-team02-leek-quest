@@ -4,7 +4,10 @@
 
   <form @submit.prevent="handleFormSubmit">
     <label>username</label>
-    <input type="text" v-model="username" />
+    <input type="text" class="margin" v-model="username" />
+    <label>password</label>
+    <input type="text" class="margin" v-model="password" />
+    <button type="submit" class="btn">Register!</button>
   </form>
 </template>
 
@@ -15,16 +18,24 @@ export default {
   name: 'RegisterPage',
   data: () => ({
     username: '',
+    password: '',
   }),
   methods: {
-    handleFormSubmit () {
-      // this.username
-      this.registerUser()
+
+    async handleFormSubmit () {
+      let response = await registerUser(this.username, this.password);
+      if (response['success']) {
+        this.$router.push('/login')
+      } else {
+        console.log(`There was an error: Invalid Input`);
+      }
     },
   },
 }
 </script>
 
 <style scoped>
-
+.margin {
+  margin: 0 8px;
+}
 </style>
