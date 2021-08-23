@@ -20,15 +20,14 @@ export default {
     password: '',
   }),
   methods: {
-
     handleFormSubmit () {
-      this.applicationUser(username, password) {
+      this.loginUser(username, password) {
         if (response['result'] === 'success') {
-          return blah; 
+          this.$router.push('/game')
         } else if (response['result'] === 'error') {
-          return (`There was an error: @{response['error']}`);
+          console.log(`There was an error: ${response['error']}`);
         } else {
-          return (`There was an error: Invalid Input`);
+          console.log(`There was an error: Invalid Input`);
         },
       },
     },

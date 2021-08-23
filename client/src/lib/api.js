@@ -5,14 +5,17 @@ export const registerUser = async (username, password) => {
   }
 }
 
-export const applicationUser = async (username, password) => {  
-  try {
-    const response = await fetch('OUR API');
-    if (!response.ok) {
-      throw Error(response.result);
-    }
-    return response.json();
-  } catch (error) {
-    return error;
+export const loginUser = async (username, password) => {  
+  return {
+    success: true
   }
+//   try {
+//     const response = await fetch('OUR API');
+//     if (!response.ok) {
+//       throw Error(response.result);
+//     }
+//     return response.json();
+//   } catch (error) {
+//     return error;
+//   }
 }
