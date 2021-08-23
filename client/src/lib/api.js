@@ -5,7 +5,7 @@ export const registerUser = async () => {
   }
 }
 
-export const applicationUser = async () => {  
+export const loginUser = async () => {  
   return {
     success: true
   }
