@@ -9,9 +9,10 @@ namespace LeekQuest.Models
     {
       this.ChatMessages = new HashSet<ChatMessage>();
     }
-    public string Position { get; set; }
+    public int UserId { get; set; }
+    public int PositionX { get; set; }
+    public int PositionY { get; set; }
     public int NumLikes { get; set; }
-
     public bool InJail { get; set; }
     public virtual ICollection<ChatMessage> ChatMessages { get; set; }
   }
