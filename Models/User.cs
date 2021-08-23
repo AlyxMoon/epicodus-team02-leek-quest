@@ -11,6 +11,8 @@ namespace LeekQuest.Models
     }
     public string Position { get; set; }
     public int NumLikes { get; set; }
+
+    public bool InJail { get; set; }
     public virtual ICollection<ChatMessage> ChatMessages { get; set; }
   }
 }
