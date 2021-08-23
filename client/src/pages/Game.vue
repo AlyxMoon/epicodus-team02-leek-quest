@@ -10,7 +10,8 @@
       :key="i"
       @click="handleCellClick(i - 1)"
     >
-      <span class="position">
+      <LeekIcon v-if="isPlayerAtPosition(i - 1)" />
+      <span v-else class="position">
         {{ getRowFromIndex(i - 1)}},{{ getColFromIndex(i - 1) }}
       </span>
     </div>
@@ -18,8 +19,14 @@
 </template>
 
 <script>
+import LeekIcon from '../components/LeekIcon'
+
 export default {
   name: 'GamePage',
+
+  components: {
+    LeekIcon,
+  },
 
   data: () => ({
     boardSize: 20,
@@ -70,9 +77,8 @@ export default {
 </script>
 
 <style scoped>
-
 .grid {
-  --cell-size: 30px;
+  --cell-size: 50px;
   --cells-per-row: 20;
 
   margin: 0 auto;
@@ -85,6 +91,7 @@ export default {
 
   background-color: black;
   border: 1px solid black;
+  overflow: auto;
 }
 
 .cell {
@@ -99,7 +106,7 @@ export default {
 }
 
 .cell.active {
-  background-color: grey;
+  background-color: black;
 }
 
 .position {
