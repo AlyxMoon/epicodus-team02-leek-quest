@@ -15,7 +15,7 @@ namespace LeekQuest.Models
     public int User2Id { get; set; }
     public int NumNice { get; set; }
     public int NumMean { get; set; }
-    public virtual ApplicationUser User { get; set; }
+    public virtual User User { get; set; }
     // public virtual ICollection<FlavorTreat> JoinEntities { get; set; }
   }
 }
