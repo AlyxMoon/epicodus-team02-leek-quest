@@ -17,7 +17,7 @@ namespace LeekQuest.Models
 
       var builder = new DbContextOptionsBuilder<LeekQuestContext>();
 
-      builder.UseMySql(configuration["ConnectionStrings:DefaultConnection"]);
+      builder.UseMySql(configuration["ConnectionStrings:DefaultConnection"], ServerVersion.AutoDetect(configuration["ConnectionStrings:DefaultConnection"]));
 
       return new LeekQuestContext(builder.Options);
     }
