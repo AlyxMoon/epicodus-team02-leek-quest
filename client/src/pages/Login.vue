@@ -18,13 +18,11 @@ export default {
   data: () => ({
     username: '',
     password: '',
-    email: '',
   }),
   methods: {
     handleFormSubmit () {
       this.username
       this.password
-      this.email
       this.applicationUser()
     },
   },

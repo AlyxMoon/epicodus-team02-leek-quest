@@ -19,10 +19,14 @@ export default {
   name: 'RegisterPage',
   data: () => ({
     username: '',
+    password: '',
+    email: '',
   }),
   methods: {
     handleFormSubmit () {
-      // this.username
+      this.username
+      this.password
+      this.email
       this.registerUser()
     },
   },
