@@ -62,30 +62,45 @@ namespace LeekQuest.Controllers
 
 		}
 
-		public ActionResult Login()
-		{
-			return View();
-		}
+		// public ActionResult Login()
+		// {
+		// 	return View();
+		// }
 
-		[HttpPost]
-		public async Task<ActionResult> Login(LoginViewModel model)
-		{
-			Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: true, lockoutOnFailure: false);
-			if (result.Succeeded)
-			{
-				return RedirectToAction("Index");
-			}
-			else
-			{
-				return View();
-			}
-		}
+		// [HttpPost]
+		// public async Task<ActionResult> Login(LoginViewModel model)
+		// {
+		// 	Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: true, lockoutOnFailure: false);
+		// 	if (result.Succeeded)
+		// 	{
+		// 		return RedirectToAction("Index");
+		// 	}
+		// 	else
+		// 	{
+		// 		return View();
+		// 	}
+		// }
 
-		[HttpPost]
-		public async Task<ActionResult> LogOff()
-		{
-			await _signInManager.SignOutAsync();
-			return RedirectToAction("Index");
-		}
+		[HttpPost("login")]
+    public async Task<LoginResultViewModel> Login(LoginViewModel model)
+    {
+      Microsoft.AspNetCore.Identity.SignInResult result = await _signInManager.PasswordSignInAsync(
+        model.UserName,
+        model.Password,
+        isPersistent: true,
+        lockoutOnFailure: false
+      );
+
+			User currentUser = await _userManager.FindByNameAsync(model.UserName);
+
+			return new LoginResultViewModel(result, currentUser);
+    }
+
+
+		[HttpGet("logout")]
+    public async void Logout ()
+    {
+      await _signInManager.SignOutAsync();
+    }
 	}
 }
