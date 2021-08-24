@@ -17,7 +17,7 @@ namespace LeekQuest.Controllers
   using Microsoft.IdentityModel.Tokens;
 
   [ApiController]
-  [Route("[controller]")]
+  [Route("/api/[controller]")]
   public class AuthController : Controller
   {
     private readonly UserManager<User> _userManager;
