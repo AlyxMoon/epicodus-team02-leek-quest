@@ -1,4 +1,4 @@
-using Game.Models;
+using LeekQuest.Models;
 
 namespace Game.ModelsView {
   public class UserViewModel {
@@ -10,16 +10,15 @@ namespace Game.ModelsView {
     public int PositionY { get; set; }
     public int TotalMoves { get; set; }
     public string PlayerColor { get; set; }
- 
+
     public UserViewModel () {}
 
-    public UserViewModel (ApplicationUser user) {
+    public UserViewModel (User user) {
       Id = user.Id;
       UserName = user.UserName;
       Email = user.Email;
       PositionX = user.PositionX;
       PositionY = user.PositionY;
-      TotalMoves = user.TotalMoves;
       PlayerColor = user.PlayerColor;
     }
   }

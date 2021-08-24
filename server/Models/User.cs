@@ -12,7 +12,7 @@ namespace LeekQuest.Models
     public int UserId { get; set; }
     public int PositionX { get; set; }
     public int PositionY { get; set; }
-    public int NumLikes { get; set; }
+    public string PlayerColor { get; set; }
     public bool InJail { get; set; }
     public virtual ICollection<ChatMessage> ChatMessages { get; set; }
   }
