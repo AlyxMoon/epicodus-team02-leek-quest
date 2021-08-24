@@ -12,6 +12,7 @@
 </template>
 
 <script>
+import { mapState, mapMutations } from 'vuex'
 import { loginUser } from '../lib/api'
 
 export default {
@@ -20,12 +21,21 @@ export default {
     username: '',
     password: '',
   }),
+  computed: {
+    ...mapState({
+      user: 'user',
+    }),
+  },
   methods: {
+    ...mapMutations(['setUser']),
+
     async handleFormSubmit () {
+      
       let response = await loginUser(this.username, this.password);
       console.log(response)
       console.log('hello- are we leeking?');
       if (response['success']) {
+        this.setUser({ username: this.username })
         this.$router.push('/game')
       } else {
         console.log(`There was an error: Invalid Input`);

@@ -6,14 +6,23 @@ r<template>
     <router-link to="/game">Game</router-link>
     <router-link to="/register">Register</router-link>
     <router-link to="/login">Log In</router-link>
+
+    {{ user.username }}
   </nav>
   
   <router-view />
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: 'App',
+  computed: {
+    ...mapState({
+      user: 'user',
+    }),
+  },
 }
 </script>
 
