@@ -78,6 +78,11 @@ namespace LeekQuest.Controllers
         isPersistent: true,
         lockoutOnFailure: false);
 
+      if (!result.Succeeded)
+      {
+        return new LoginResultViewModel(result, new User(), "");
+      }
+
       User currentUser = await _userManager.FindByNameAsync(model.UserName);
 
       List<Claim> authClaims = new ()
