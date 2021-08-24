@@ -59,7 +59,6 @@ namespace LeekQuest.Controllers
 			IdentityResult result = await _userManager.CreateAsync(user, model.Password);
 
 			return new RegisterResultViewModel (result, user);
-
 		}
 
 		// public ActionResult Login()
