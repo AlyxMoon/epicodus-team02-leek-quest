@@ -1,18 +1,11 @@
-using Microsoft.AspNetCore.Mvc;
-using LeekQuest.Models;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace LeekQuest.Controllers
 {
+  using System.Collections.Generic;
+  using System.Linq;
+  using LeekQuest.Models;
+  using Microsoft.AspNetCore.Mvc;
   public class UserRelationshipsController : Controller
   {
-    private readonly LeekQuestContext _db;
-    public UserRelationshipsController(LeekQuestContext db)
-    {
-      _db = db;
-    }
-
     [HttpGet("/")]
     public ActionResult Index()
     {

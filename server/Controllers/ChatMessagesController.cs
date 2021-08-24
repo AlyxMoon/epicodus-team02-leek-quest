@@ -1,17 +1,13 @@
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Identity;
-using System.Threading.Tasks;
-using System.Security.Claims;
-
-using LeekQuest.Models;
-
 namespace LeekQuest.Controllers
 {
+  using System.Collections.Generic;
+  using System.Linq;
+  using System.Security.Claims;
+  using System.Threading.Tasks;
+  using LeekQuest.Models;
+  using Microsoft.AspNetCore.Authorization;
+  using Microsoft.AspNetCore.Identity;
+  using Microsoft.AspNetCore.Mvc;
   public class ChatMessagesController : Controller
   {
     private readonly LeekQuestContext _db;
@@ -43,9 +39,10 @@ namespace LeekQuest.Controllers
       chatMessage.User = currentUser;
       _db.ChatMessages.Add(chatMessage);
       _db.SaveChanges();
-      
+
       return RedirectToAction("Index");
     }
+
     [Authorize]
     public ActionResult Delete(int id)
     {

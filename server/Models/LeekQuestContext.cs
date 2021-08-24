@@ -1,8 +1,7 @@
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore;
-
 namespace LeekQuest.Models
 {
+  using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+  using Microsoft.EntityFrameworkCore;
   public class LeekQuestContext : IdentityDbContext<User>
   {
     // public override DbSet<User> Users { get; set; }

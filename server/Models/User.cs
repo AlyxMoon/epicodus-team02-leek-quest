@@ -1,14 +1,14 @@
-using Microsoft.AspNetCore.Identity;
-using System.Collections.Generic;
-
 namespace LeekQuest.Models
 {
+  using System.Collections.Generic;
+  using Microsoft.AspNetCore.Identity;
   public class User : IdentityUser
   {
     public User()
     {
-      this.ChatMessages = new HashSet<ChatMessage>();
+      ChatMessages = new HashSet<ChatMessage>();
     }
+
     public int UserId { get; set; }
     public int PositionX { get; set; }
     public int PositionY { get; set; }
