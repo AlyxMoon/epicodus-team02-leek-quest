@@ -9,7 +9,6 @@ namespace LeekQuest.Models
       ChatMessages = new HashSet<ChatMessage>();
     }
 
-    public int UserId { get; set; }
     public int PositionX { get; set; }
     public int PositionY { get; set; }
     public string PlayerColor { get; set; }
