@@ -17,7 +17,7 @@ namespace LeekQuest.Controllers
   using Microsoft.IdentityModel.Tokens;
 
   [ApiController]
-  [Route("[controller]")]
+  [Route("/api/[controller]")]
   public class AuthController : Controller
   {
     private readonly UserManager<User> _userManager;
@@ -61,7 +61,6 @@ namespace LeekQuest.Controllers
     {
       User user = new ()
       {
-        Email = model.Email,
         UserName = model.UserName
       };
 
@@ -78,6 +77,11 @@ namespace LeekQuest.Controllers
         model.Password,
         isPersistent: true,
         lockoutOnFailure: false);
+
+      if (!result.Succeeded)
+      {
+        return new LoginResultViewModel(result, new User(), "");
+      }
 
       User currentUser = await _userManager.FindByNameAsync(model.UserName);
 
