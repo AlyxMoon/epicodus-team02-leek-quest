@@ -1,14 +1,16 @@
-using Microsoft.AspNetCore.Identity;
+namespace LeekQuest.ViewModels
+{
+  using LeekQuest.Models;
+  using Microsoft.AspNetCore.Identity;
 
-using LeekQuest.Models;
-
-namespace LeekQuest.ViewModels {
-  public class RegisterResultViewModel {
+  public class RegisterResultViewModel
+  {
     public IdentityResult Result { get; set; }
 
     public UserViewModel User { get; set; }
 
-    public RegisterResultViewModel (IdentityResult result, User user) {
+    public RegisterResultViewModel(IdentityResult result, User user)
+    {
       Result = result;
       User = new UserViewModel(user);
     }

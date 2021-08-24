@@ -1,7 +1,9 @@
-using LeekQuest.Models;
+namespace LeekQuest.ViewModels
+{
+  using LeekQuest.Models;
 
-namespace LeekQuest.ViewModels {
-  public class UserViewModel {
+  public class UserViewModel
+  {
     public string Id { get; set; }
     public string UserName { get; set; }
     public string Email { get; set; }
@@ -11,9 +13,12 @@ namespace LeekQuest.ViewModels {
     public int TotalMoves { get; set; }
     public string PlayerColor { get; set; }
 
-    public UserViewModel () {}
+    public UserViewModel()
+    {
+    }
 
-    public UserViewModel (User user) {
+    public UserViewModel(User user)
+    {
       Id = user.Id;
       UserName = user.UserName;
       Email = user.Email;
