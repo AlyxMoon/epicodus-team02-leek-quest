@@ -1,14 +1,12 @@
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
-using Microsoft.Extensions.Configuration;
-using System.IO;
-
 namespace LeekQuest.Models
 {
+  using System.IO;
+  using Microsoft.EntityFrameworkCore;
+  using Microsoft.EntityFrameworkCore.Design;
+  using Microsoft.Extensions.Configuration;
   public class LeekQuestContextFactory : IDesignTimeDbContextFactory<LeekQuestContext>
   {
-
-    LeekQuestContext IDesignTimeDbContextFactory<LeekQuestContext>.CreateDbContext(string[] args)
+    public LeekQuestContext CreateDbContext(string[] args)
     {
       IConfigurationRoot configuration = new ConfigurationBuilder()
           .SetBasePath(Directory.GetCurrentDirectory())

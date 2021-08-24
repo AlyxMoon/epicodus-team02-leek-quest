@@ -1,18 +1,8 @@
-using Microsoft.AspNetCore.Mvc;
-using LeekQuest.Models;
-using System.Linq;
-
-
 namespace LeekQuest.Controllers
 {
+  using Microsoft.AspNetCore.Mvc;
   public class HomeController : Controller
   {
-    private readonly LeekQuestContext _db;
-    public HomeController(LeekQuestContext db)
-    {
-      _db = db;
-    }
-
     [HttpGet("/")]
     public ActionResult Index()
     {

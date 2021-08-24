@@ -2,7 +2,6 @@ namespace LeekQuest.Models
 {
   public class ChatMessage
   {
-
     public int ChatMessageId { get; set; }
     public string UserId { get; set; }
     public string Message { get; set; }

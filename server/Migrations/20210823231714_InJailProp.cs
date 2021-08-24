@@ -1,7 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-
-namespace LeekQuest.Migrations
+﻿namespace LeekQuest.Migrations
 {
+    using Microsoft.EntityFrameworkCore.Migrations;
     public partial class InJailProp : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
