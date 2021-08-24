@@ -6,10 +6,13 @@ namespace LeekQuest.ViewModels
   {
     public SignInResult Result { get; set; }
     public UserViewModel User { get; set; }
-    public LoginResultViewModel(SignInResult result, User user)
+
+    public string Token { get; set; }
+    public LoginResultViewModel(SignInResult result, User user, string token)
     {
       Result = result;
       User = new UserViewModel(user);
+      Token = token;
     }
   }
 }
