@@ -61,7 +61,6 @@ namespace LeekQuest.Controllers
     {
       User user = new ()
       {
-        Email = model.Email,
         UserName = model.UserName
       };
 
