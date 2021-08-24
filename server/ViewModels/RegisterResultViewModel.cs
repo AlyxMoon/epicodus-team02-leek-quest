@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Identity;
 
 using LeekQuest.Models;
 
-namespace LeekQuest.ModelsView {
+namespace LeekQuest.ViewModels {
   public class RegisterResultViewModel {
     public IdentityResult Result { get; set; }
 
