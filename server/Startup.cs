@@ -1,6 +1,8 @@
 namespace LeekQuest
 {
+  using System.Text;
   using LeekQuest.Models;
+  using Microsoft.AspNetCore.Authentication.JwtBearer;
   using Microsoft.AspNetCore.Builder;
   using Microsoft.AspNetCore.Hosting;
   using Microsoft.AspNetCore.Identity;
@@ -8,6 +10,7 @@ namespace LeekQuest
   using Microsoft.Extensions.Configuration;
   using Microsoft.Extensions.DependencyInjection;
   using Microsoft.Extensions.Hosting;
+  using Microsoft.IdentityModel.Tokens;
   public class Startup
   {
     public Startup(IConfiguration configuration)
@@ -29,6 +32,35 @@ namespace LeekQuest
       services.AddIdentity<User, IdentityRole>()
         .AddEntityFrameworkStores<LeekQuestContext>()
         .AddDefaultTokenProviders();
+
+      services
+        .AddAuthentication(options =>
+        {
+          options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+          options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+          options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+        })
+        .AddJwtBearer(options =>
+        {
+            options.SaveToken = true;
+            options.RequireHttpsMetadata = false;
+            options.TokenValidationParameters = new TokenValidationParameters()
+            {
+              ValidateIssuer = false,
+              ValidateAudience = false,
+              IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(Configuration["JWT:Secret"]))
+            };
+        });
+
+      services.Configure<IdentityOptions>(options =>
+      {
+        options.Password.RequireDigit = false;
+        options.Password.RequiredLength = 8;
+        options.Password.RequireLowercase = false;
+        options.Password.RequireNonAlphanumeric = false;
+        options.Password.RequireUppercase = false;
+        options.Password.RequiredUniqueChars = 0;
+      });
 
       // In production, the React files will be served from this directory
       // services.AddSpaStaticFiles(configuration =>
