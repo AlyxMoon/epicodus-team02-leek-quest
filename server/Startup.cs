@@ -37,7 +37,7 @@ namespace LeekQuest
       // In production, the React files will be served from this directory
       // services.AddSpaStaticFiles(configuration =>
       // {
-      //   configuration.RootPath = "client/build";
+      //   configuration.RootPath = "../client/build";
       // });
     }
 
@@ -55,13 +55,12 @@ namespace LeekQuest
         app.UseHsts();
       }
       app.UseAuthentication(); 
-      app.UseAuthorization();
       // app.UseHttpsRedirection();
       app.UseStaticFiles();
       // app.UseSpaStaticFiles();
 
       app.UseRouting();
-
+      app.UseAuthorization();
       app.UseEndpoints(endpoints =>
       {
         endpoints.MapControllerRoute(
@@ -71,7 +70,7 @@ namespace LeekQuest
 
       // app.UseSpa(spa =>
       // {
-      //   spa.Options.SourcePath = "client";
+      //   spa.Options.SourcePath = "../client";
 
       //   if (env.IsDevelopment())
       //   {
