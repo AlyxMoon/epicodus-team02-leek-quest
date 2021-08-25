@@ -62,6 +62,17 @@ namespace LeekQuest
         options.Password.RequiredUniqueChars = 0;
       });
 
+      services.AddCors(options =>
+      {
+        options.AddPolicy("AllowSpecificOrigin",
+          builder =>
+          {
+            builder.WithOrigins("http://localhost:5000", "https://localhost:5001", "http://localhost:8080");
+            builder.AllowAnyHeader();
+            builder.AllowAnyMethod();
+          });
+      });
+
       // In production, the React files will be served from this directory
       // services.AddSpaStaticFiles(configuration =>
       // {
@@ -89,6 +100,7 @@ namespace LeekQuest
       // app.UseSpaStaticFiles();
 
       app.UseRouting();
+      app.UseCors("AllowSpecificOrigin");
       app.UseAuthorization();
       app.UseEndpoints(endpoints =>
       {
