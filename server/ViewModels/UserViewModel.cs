@@ -6,8 +6,6 @@ namespace LeekQuest.ViewModels
   {
     public string Id { get; set; }
     public string UserName { get; set; }
-    public string Email { get; set; }
-
     public int PositionX { get; set; }
     public int PositionY { get; set; }
     public int TotalMoves { get; set; }
@@ -21,7 +19,6 @@ namespace LeekQuest.ViewModels
     {
       Id = user.Id;
       UserName = user.UserName;
-      Email = user.Email;
       PositionX = user.PositionX;
       PositionY = user.PositionY;
       PlayerColor = user.PlayerColor;

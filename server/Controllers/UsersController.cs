@@ -26,9 +26,16 @@ namespace LeekQuest.Controllers
 
     [HttpGet]
     [Authorize]
-    public ActionResult<List<User>> Get()
+    public ActionResult<List<UserViewModel>> Get()
     {
-      return _db.Users.ToList();
+      List<User> userList = _db.Users.ToList();
+      List<UserViewModel> userViewModelsList = new ();
+      foreach (User user in userList)
+      {
+        userViewModelsList.Add(new UserViewModel(user));
+      }
+
+      return userViewModelsList;
     }
   }
 }
