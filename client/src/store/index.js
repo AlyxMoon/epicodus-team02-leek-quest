@@ -9,6 +9,12 @@ const state = {
   token: '',
 }
 
+const getters = {
+  isLoggedIn (state) {
+    return !!(state.user && state.user.id)
+  },
+}
+
 const actions = {
   async getTokenAuthData (context) {
     try {
@@ -66,6 +72,7 @@ const mutations = {
 
 const store = createStore({
   state,
+  getters,
   actions,
   mutations,
 })

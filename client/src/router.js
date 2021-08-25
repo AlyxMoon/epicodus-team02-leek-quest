@@ -1,5 +1,7 @@
 import { createWebHistory, createRouter } from 'vue-router'
 
+import store from '@/store'
+
 import Game from './pages/Game'
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -21,6 +23,13 @@ const routes = [
   {
     path: '/game',
     component: Game,
+    beforeEnter: (to, from, next) => {
+      if (!store.getters.isLoggedIn) {
+        return next('/login')
+      }
+
+      next()
+    }
   },
 ]
 
