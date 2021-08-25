@@ -5,6 +5,7 @@ namespace LeekQuest
   using Microsoft.AspNetCore.Authentication.JwtBearer;
   using Microsoft.AspNetCore.Builder;
   using Microsoft.AspNetCore.Hosting;
+  using Microsoft.AspNetCore.Http;
   using Microsoft.AspNetCore.Identity;
   using Microsoft.EntityFrameworkCore;
   using Microsoft.Extensions.Configuration;
@@ -73,14 +74,12 @@ namespace LeekQuest
           });
       });
 
-      // In production, the React files will be served from this directory
-      // services.AddSpaStaticFiles(configuration =>
-      // {
-      //   configuration.RootPath = "../client/build";
-      // });
+      services.AddSpaStaticFiles(configuration =>
+      {
+        configuration.RootPath = "../client/build";
+      });
     }
 
-    // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
       if (env.IsDevelopment())
@@ -90,14 +89,11 @@ namespace LeekQuest
       else
       {
         app.UseExceptionHandler("/Error");
-        // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
         app.UseHsts();
       }
 
       app.UseAuthentication();
-      // app.UseHttpsRedirection();
       app.UseStaticFiles();
-      // app.UseSpaStaticFiles();
 
       app.UseRouting();
       app.UseCors("AllowSpecificOrigin");
@@ -109,14 +105,15 @@ namespace LeekQuest
           pattern: "{controller}/{action=Index}/{id?}");
       });
 
-      // app.UseSpa(spa =>
-      // {
-      //   spa.Options.SourcePath = "../client";
-      //   if (env.IsDevelopment())
-      //   {
-      //     spa.UseReactDevelopmentServer(npmScript: "serve");
-      //   }
-      // });
+      app.UseSpaStaticFiles();
+      app.UseSpa(spa =>
+      {
+        spa.Options.SourcePath = "../client";
+        if (env.IsDevelopment())
+        {
+          spa.UseProxyToSpaDevelopmentServer("http://localhost:8080");
+        }
+      });
     }
   }
 }
