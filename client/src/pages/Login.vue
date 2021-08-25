@@ -6,9 +6,17 @@
     <label>username</label>
     <input type="text" class="margin" v-model="username" />
     <label>password</label>
-    <input type="text" class="margin" v-model="password" />
+    <input type="password" class="margin" v-model="password" />
     <button type="submit" class="btn">Log In</button>
   </form>
+    <ul>
+    <li 
+      v-for="error of errors"
+      :key="error.code"
+    >
+      {{ error.description }}
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -32,13 +40,12 @@ export default {
     async handleFormSubmit () {
       
       let response = await loginUser(this.username, this.password);
-      console.log(response)
-      console.log('hello- are we leeking?');
-      if (response['success']) {
+
+      if (response.result.succeeded) {
         this.setUser({ username: this.username })
         this.$router.push('/game')
       } else {
-        console.log(`There was an error: Invalid Input`);
+        this.errors = response.result.errors
       }
     },
   },
