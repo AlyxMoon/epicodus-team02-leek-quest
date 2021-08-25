@@ -6,7 +6,7 @@
     <label>username</label>
     <input type="text" class="margin" v-model="username" />
     <label>password</label>
-    <input type="text" class="margin" v-model="password" />
+    <input type="password" class="margin" v-model="password" />
     <button type="submit" class="btn">Register!</button>
   </form>
   <ul>

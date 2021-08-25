@@ -23,6 +23,17 @@ namespace LeekQuest
     // This method gets called by the runtime. Use this method to add services to the container.
     public void ConfigureServices(IServiceCollection services)
     {
+      services.AddCors(options =>
+      {
+        options.AddPolicy("AllowSpecificOrigin",
+          builder =>
+          {
+            builder.WithOrigins("http://localhost:5000", "https://localhost:5001", "http://localhost:8080");
+            builder.AllowAnyHeader();
+            builder.AllowAnyMethod();
+          });
+      });
+
       string config = Configuration["ConnectionStrings:DefaultConnection"];
       ServerVersion version = ServerVersion.AutoDetect(config);
 
