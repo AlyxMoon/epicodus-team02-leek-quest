@@ -19,6 +19,7 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
 import LeekIcon from '../components/LeekIcon'
 
 export default {
@@ -30,10 +31,16 @@ export default {
 
   data: () => ({
     boardSize: 20,
-    position: [0, 0],
   }),
 
   computed: {
+    ...mapState({
+      position: ({ user }) => {
+        if (!user) return [0, 0]
+        return [user.positionX, user.positionY]
+      }
+    }),
+
     positionText () {
       const row = this.position[0]
       const col = this.position[1]
