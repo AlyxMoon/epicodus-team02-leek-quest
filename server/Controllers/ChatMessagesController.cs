@@ -31,7 +31,6 @@ namespace LeekQuest.Controllers
       return View();
     }
 
-    [HttpPost]
     public async Task<ActionResult> Create(ChatMessage chatMessage)
     {
       var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
@@ -43,7 +42,6 @@ namespace LeekQuest.Controllers
       return RedirectToAction("Index");
     }
 
-    [Authorize]
     public ActionResult Delete(int id)
     {
       var thisChatMessage = _db.ChatMessages.FirstOrDefault(chatMessage => chatMessage.ChatMessageId == id);
@@ -51,7 +49,6 @@ namespace LeekQuest.Controllers
     }
 
     [Authorize]
-    [HttpPost, ActionName("Delete")]
     public ActionResult DeleteConfirmed(int id)
     {
       var thisChatMessage = _db.ChatMessages.FirstOrDefault(chatMessage => chatMessage.ChatMessageId == id);
