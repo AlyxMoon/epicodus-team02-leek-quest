@@ -9,7 +9,7 @@
     <input type="password" class="margin" v-model="password" />
     <button type="submit" class="btn">Log In</button>
   </form>
-    <div class="showErrors"></div>
+    <div class="showErrors">{{ error }}</div>
 </template>
 
 <script>
@@ -21,6 +21,7 @@ export default {
   data: () => ({
     username: '',
     password: '',
+    error: '',
   }),
   computed: {
     ...mapState({
@@ -30,10 +31,6 @@ export default {
   methods: {
     ...mapMutations(['setUser']),
 
-    clearFields() {
-      ('.showErrors').text('');
-    },
-
     async handleFormSubmit () {
       let response = await loginUser(this.username, this.password)
 
@@ -41,10 +38,8 @@ export default {
         this.setUser({ username: this.username })
         this.$router.push('/game')
       }
-      if (!response.ok) {
-        const error = "failed to log in; please try again"
-        return ('.showErrors').text(Promise.reject(error));
-
+      else {
+        this.error = "failed to log in; please try again"
       }
     }
   }
