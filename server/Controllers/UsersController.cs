@@ -52,5 +52,10 @@ namespace LeekQuest.Controllers
 
         return new UserViewModel(user);
     }
+
+    //Patch: api/Users/"id"
+    [HttpPut("{id"})]
+    [Authorize]
+    
   }
 }
