@@ -52,5 +52,60 @@ namespace LeekQuest.Controllers
 
         return new UserViewModel(user);
     }
+
+    // Post: api/Users/"id"/position
+    [HttpPost("{id}/position")]
+    // [Authorize]
+
+    public async Task<ActionResult<UserViewModel>> MovePlayer(string id, string direction)
+    {
+      var user = await _db.Users.FindAsync(id);
+
+      if (user == null)
+        {
+            return NotFound();
+        }
+
+      // if User.Identity.IsAuthenticated ...?
+      var newX = user.PositionX;
+      var newY = user.PositionY;
+      switch (direction)
+      {
+        case "Up":
+          newY--;
+          break;
+        case "Down":
+          newY++;
+          break;
+        case "Right":
+          newX++;
+          break;
+        case "Left":
+          newX--;
+          break;
+        case "UpLeft":
+          newY--;
+          newX--;
+          break;
+        case "UpRight":
+          newY--;
+          newX++;
+          break;
+        case "DownRight":
+          newY++;
+          newX++;
+          break;
+        case "DownLeft":
+          newY++;
+          newX--;
+          break;
+      }
+
+      user.PositionX = newX;
+      user.PositionY = newY;
+      _db.SaveChanges();
+
+      return new UserViewModel(user);
+    }
   }
 }
