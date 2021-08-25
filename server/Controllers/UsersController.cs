@@ -37,5 +37,20 @@ namespace LeekQuest.Controllers
 
       return userViewModelsList;
     }
+
+    // GET: api/Users/"id"
+    [HttpGet("{id}")]
+    [Authorize]
+    public async Task<ActionResult<UserViewModel>> GetUser(string id)
+    {
+        var user = await _db.Users.FindAsync(id);
+
+        if (user == null)
+        {
+            return NotFound();
+        }
+
+        return new UserViewModel(user);
+    }
   }
 }
