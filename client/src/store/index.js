@@ -1,8 +1,27 @@
 import { createStore } from 'vuex'
+import { loginUser as apiLoginUser } from '@/lib/api'
 
 const state = {
   user: {},
   token: '',
+}
+
+const actions = {
+  async loginUser (context, userData) {
+    try {
+      const response = await apiLoginUser(userData.username, userData.password)
+
+      if (response.result.succeeded) {
+        context.commit('setUser', response.user)
+      } else {
+        context.commit('setUser', {})
+      }
+
+      return response
+    } catch (error) {
+      console.error(error)
+    }
+  },
 }
 
 const mutations = {
@@ -13,6 +32,7 @@ const mutations = {
 
 const store = createStore({
   state,
+  actions,
   mutations,
 })
 

@@ -7,7 +7,7 @@ r<template>
     <router-link to="/register">Register</router-link>
     <router-link to="/login">Log In</router-link>
 
-    {{ user.username }}
+    <span>{{ user && user.userName }}</span>
   </nav>
   
   <router-view />
