@@ -9,14 +9,7 @@
     <input type="password" class="margin" v-model="password" />
     <button type="submit" class="btn">Log In</button>
   </form>
-    <ul>
-    <li 
-      v-for="error of errors"
-      :key="error.code"
-    >
-      {{ error.description }}
-    </li>
-  </ul>
+    <div class="showErrors"></div>
 </template>
 
 <script>
@@ -37,18 +30,24 @@ export default {
   methods: {
     ...mapMutations(['setUser']),
 
+    clearFields() {
+      ('.showErrors').text('');
+    },
+
     async handleFormSubmit () {
-      
-      let response = await loginUser(this.username, this.password);
+      let response = await loginUser(this.username, this.password)
 
       if (response.result.succeeded) {
         this.setUser({ username: this.username })
         this.$router.push('/game')
-      } else {
-        this.errors = response.result.errors
       }
-    },
-  },
+      if (!response.ok) {
+        const error = "failed to log in; please try again"
+        return ('.showErrors').text(Promise.reject(error));
+
+      }
+    }
+  }
 }
 </script>
 
