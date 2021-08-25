@@ -1,4 +1,4 @@
-r<template>
+<template>
   <h1>Application</h1>
 
   <nav>

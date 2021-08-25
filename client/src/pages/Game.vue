@@ -5,7 +5,10 @@
   >
     <div 
       class="cell" 
-      :class="{ active: isPlayerAtPosition(i - 1) }"
+      :class="{ 
+        active: isPlayerAtPosition(i - 1),
+        'can-move-to': isNextToPlayerPosition(i - 1),
+      }"
       v-for="i of (boardSize * boardSize)"
       :key="i"
       @click="handleCellClick(i - 1)"
@@ -72,6 +75,19 @@ export default {
       )
     },
 
+    isNextToPlayerPosition (index) {
+      const [x, y] = this.position
+
+      const row = this.getRowFromIndex(index)
+      const col = this.getColFromIndex(index)
+
+      if (col === x && row === y) return false
+      return (
+        (col >= x - 1 && col <= x + 1) &&
+        (row >= y - 1 && row <= y + 1)
+      )
+    },
+
     handleCellClick (index) {
       const row = this.getRowFromIndex(index)
       const col = this.getColFromIndex(index)
@@ -108,12 +124,17 @@ export default {
 
   background-color: white;
 
-  cursor: pointer;
+  cursor: default;
   user-select: none;
 }
 
 .cell.active {
   background-color: black;
+}
+
+.cell.can-move-to {
+  background-color: #DDD;
+  cursor: pointer;
 }
 
 .position {
