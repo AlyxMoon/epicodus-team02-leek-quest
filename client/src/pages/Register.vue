@@ -9,6 +9,14 @@
     <input type="text" class="margin" v-model="password" />
     <button type="submit" class="btn">Register!</button>
   </form>
+  <ul>
+    <li 
+      v-for="error of errors"
+      :key="error.code"
+    >
+      {{ error.description }}
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -19,15 +27,17 @@ export default {
   data: () => ({
     username: '',
     password: '',
+    errors: [],
   }),
   methods: {
 
     async handleFormSubmit () {
-      let response = await registerUser(this.username, this.password);
-      if (response['success']) {
+      const response = await registerUser(this.username, this.password);
+
+      if (response.result.succeeded) {
         this.$router.push('/login')
       } else {
-        console.log(`There was an error: Invalid Input`);
+        this.errors = response.result.errors
       }
     },
   },
