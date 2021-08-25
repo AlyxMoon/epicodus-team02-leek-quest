@@ -38,8 +38,9 @@ namespace LeekQuest.Controllers
       return userViewModelsList;
     }
 
-    // GET: api/Users/5
+    // GET: api/Users/"id"
     [HttpGet("{id}")]
+    [Authorize]
     public async Task<ActionResult<UserViewModel>> GetUser(string id)
     {
         var user = await _db.Users.FindAsync(id);
@@ -51,5 +52,10 @@ namespace LeekQuest.Controllers
 
         return new UserViewModel(user);
     }
+
+    //Patch: api/Users/"id"
+    [HttpPut("{id"})]
+    [Authorize]
+    
   }
 }
