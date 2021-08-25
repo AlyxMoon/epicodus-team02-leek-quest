@@ -1,5 +1,8 @@
 import { createStore } from 'vuex'
-import { loginUser as apiLoginUser } from '@/lib/api'
+import { 
+  loginUser as apiLoginUser,
+  getTokenAuthData as apiGetTokenAuthData,
+} from '@/lib/api'
 
 const state = {
   user: {},
@@ -7,14 +10,31 @@ const state = {
 }
 
 const actions = {
+  async getTokenAuthData (context) {
+    try {
+      const token = window.localStorage.getItem('token')
+      if (!token) return
+
+      const response = await apiGetTokenAuthData(token)
+
+      context.dispatch('updateToken', token)
+      context.commit('setUser', response)
+    } catch (error) {
+      console.error('getTokenAuthData error', error)
+      context.dispatch('updateToken', '')
+    }
+  },
+
   async loginUser (context, userData) {
     try {
       const response = await apiLoginUser(userData.username, userData.password)
 
       if (response.result.succeeded) {
         context.commit('setUser', response.user)
+        context.dispatch('updateToken', response.token)
       } else {
         context.commit('setUser', {})
+        context.dispatch('updateToken', '')
       }
 
       return response
@@ -22,9 +42,23 @@ const actions = {
       console.error(error)
     }
   },
+
+  async updateToken (context, token) {
+    if (token) {
+      window.localStorage.setItem('token', token)
+      context.commit('setToken', token)
+    } else {
+      window.localStorage.removeItem('token')
+      context.commit('setToken', '')
+    }
+  }
 }
 
 const mutations = {
+  setToken (state, token) {
+    state.token = token
+  },
+
   setUser (state, user) {
     state.user = user
   },

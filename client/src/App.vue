@@ -14,7 +14,7 @@ r<template>
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'App',
@@ -22,6 +22,14 @@ export default {
     ...mapState({
       user: 'user',
     }),
+  },
+
+  created () {
+    this.getTokenAuthData()
+  },
+
+  methods: {
+    ...mapActions(['getTokenAuthData']),
   },
 }
 </script>

@@ -1,4 +1,3 @@
-//this is sample/fake backend logic to help us pretend to work with the server side
 export const registerUser = async (username, password) => {
   const response = await fetch('http://localhost:5000/api/auth/register', {
     method: 'POST',
@@ -25,6 +24,16 @@ export const loginUser = async (username, password) => {
       password
     })
   });
+
+  return response.json()
+}
+
+export const getTokenAuthData = async (token) => {
+  const response = await fetch('http://localhost:5000/api/auth', {
+    headers: {
+      'Authorization': `Bearer ${token}`,
+    },
+  })
 
   return response.json()
 }
