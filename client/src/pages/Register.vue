@@ -9,6 +9,14 @@
     <input type="text" class="margin" v-model="password" />
     <button type="submit" class="btn">Register!</button>
   </form>
+  <ul>
+    <li 
+      v-for="error of errors"
+      :key="error.code"
+    >
+      {{ error.description }}
+    </li>
+  </ul>
 </template>
 
 <script>
@@ -19,6 +27,7 @@ export default {
   data: () => ({
     username: '',
     password: '',
+    errors: [],
   }),
   methods: {
 
@@ -28,10 +37,7 @@ export default {
       if (response.result.succeeded) {
         this.$router.push('/login')
       } else {
-        
-        for (let error of response.result.errors) {
-          console.log(error);
-        }
+        this.errors = response.result.errors
       }
     },
   },
