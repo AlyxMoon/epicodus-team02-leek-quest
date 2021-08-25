@@ -23,11 +23,15 @@ export default {
   methods: {
 
     async handleFormSubmit () {
-      let response = await registerUser(this.username, this.password);
-      if (response['success']) {
+      const response = await registerUser(this.username, this.password);
+
+      if (response.result.succeeded) {
         this.$router.push('/login')
       } else {
-        console.log(`There was an error: Invalid Input`);
+        
+        for (let error of response.result.errors) {
+          console.log(error);
+        }
       }
     },
   },
