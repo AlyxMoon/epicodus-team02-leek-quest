@@ -7,6 +7,7 @@
       class="cell" 
       :class="{ 
         active: isPlayerAtPosition(i - 1),
+        'has-other-players': getOtherPlayersAtPosition(i - 1).length > 0,
         'can-move-to': isNextToPlayerPosition(i - 1),
       }"
       v-for="i of (boardSize * boardSize)"
@@ -14,6 +15,10 @@
       @click="handleCellClick(i - 1)"
     >
       <LeekIcon v-if="isPlayerAtPosition(i - 1)" />
+
+      <template v-if="getOtherPlayersAtPosition(i - 1).length > 0">
+        <LeekIcon />
+      </template>
     </div>
   </div>
 
@@ -46,6 +51,7 @@ export default {
 
   computed: {
     ...mapState({
+      user: 'user',
       userList: 'userList',
 
       position: ({ user }) => {
@@ -93,6 +99,18 @@ export default {
         row === this.position[1] && 
         col === this.position[0]
       )
+    },
+
+    getOtherPlayersAtPosition (index) {
+      const row = this.getRowFromIndex(index)
+      const col = this.getColFromIndex(index)
+
+      return this.userList.filter(user => {
+        return (
+          user.id !== this.user.id &&
+          user.positionX === col && user.positionY === row
+        )
+      })
     },
 
     isNextToPlayerPosition (index) {
@@ -155,6 +173,10 @@ export default {
   user-select: none;
 }
 
+.cell.has-other-players {
+  background-color: #444;
+}
+
 .cell.active {
   background-color: black;
 }
@@ -166,5 +188,13 @@ export default {
 
 .position {
   font-size: 0.7em;
+}
+
+html{
+    background: radial-gradient(
+    circle,
+    rgba(124, 219, 116, 0.936) 31%,
+    rgba(41, 210, 52, 0.8748541652989321) 100%
+  );
 }
 </style>

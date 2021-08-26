@@ -4,15 +4,17 @@
     <button
       class="navbar-toggler"
       type="button"
-      data-toggle="collapse"
-      data-target="#navbarNav"
       aria-controls="navbarNav"
       aria-expanded="false"
       aria-label="Toggle navigation"
+      @click="show = !show"
     >
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="navbarNav">
+    <div 
+      class="collapse navbar-collapse"
+      :class="{ show: show }"
+    >
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item active">
           <router-link to="/">Home</router-link>
@@ -35,8 +37,18 @@
 </template>
 
 <script>
+import { mapState } from 'vuex'
+
 export default {
   name: "Navbar",
+  data: () => ({
+    show: false,
+  }),
+  computed: {
+    ...mapState({
+      user: 'user',
+    }),
+  }
 };
 </script>
 
@@ -44,6 +56,7 @@ export default {
 nav {
   opacity: 0.6;
   padding: 0 2%;
+  font-weight: bold;
 }
 .navbar-brand {
   padding-left: 50px;
