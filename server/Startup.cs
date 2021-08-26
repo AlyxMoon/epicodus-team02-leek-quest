@@ -79,7 +79,7 @@ namespace LeekQuest
         options.AddPolicy("AllowSpecificOrigin",
           builder =>
           {
-            builder.WithOrigins("http://localhost:5000", "https://localhost:5001", "http://localhost:8080");
+            builder.WithOrigins("http://localhost:5000", "https://localhost:5001", "http://localhost:8080", "http://137.184.38.22");
             builder.AllowAnyHeader();
             builder.AllowAnyMethod();
           });
