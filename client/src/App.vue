@@ -21,11 +21,13 @@ export default {
   computed: {
     ...mapState({
       user: 'user',
+      userList: 'userList',
     }),
   },
 
   created () {
     this.getTokenAuthData()
+    this.getL
   },
 
   methods: {

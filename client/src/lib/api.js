@@ -28,15 +28,12 @@ export const loginUser = async (username, password) => {
   return response.json()
 }
 
-export const leekUserList = async (username) => {
+export const leekUserList = async () => {
   const response = await fetch('http://localhost:5000/api/users', {
-    method: 'POST',
+    method: 'GET',
     headers: {
       'Content-Type': 'application/json'
     },
-    body: JSON.stringify({
-      username,
-    })
   });
 
   return response.json()
