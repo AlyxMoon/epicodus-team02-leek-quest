@@ -17,10 +17,12 @@ namespace LeekQuest.Controllers
   [Route("/api/[controller]")]
   public class UsersController : Controller
   {
+    private readonly UserManager<User> _userManager;
     private readonly LeekQuestContext _db;
 
-    public UsersController(LeekQuestContext db)
+    public UsersController(LeekQuestContext db, UserManager<User> userManager)
     {
+      _userManager = userManager;
       _db = db;
     }
 
@@ -43,7 +45,7 @@ namespace LeekQuest.Controllers
     [Authorize]
     public async Task<ActionResult<UserViewModel>> GetUser(string id)
     {
-        var user = await _db.Users.FindAsync(id);
+        User user = await _db.Users.FindAsync(id);
 
         if (user == null)
         {
@@ -51,6 +53,77 @@ namespace LeekQuest.Controllers
         }
 
         return new UserViewModel(user);
+    }
+
+    // Post: api/Users/"id"/position
+    [HttpPost("position")]
+    [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
+
+    public async Task<ActionResult<UserPositionViewModel>> MovePlayer([FromHeader] string authorization, string direction)
+    {
+      if (AuthenticationHeaderValue.TryParse(authorization, out AuthenticationHeaderValue headerValue))
+      {
+        string parameter = headerValue.Parameter;
+        JwtSecurityTokenHandler handler = new ();
+        JwtSecurityToken token = handler.ReadJwtToken(parameter);
+
+        string username = token.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Name).Value;
+
+        User user = await _userManager.FindByNameAsync(username);
+        bool success = true;
+        int newX = user.PositionX;
+        int newY = user.PositionY;
+        string message = "Nice Move...";
+        switch (direction)
+        {
+          case "Up":
+            newY--;
+            break;
+          case "Down":
+            newY++;
+            break;
+          case "Right":
+            newX++;
+            break;
+          case "Left":
+            newX--;
+            break;
+          case "UpLeft":
+            newY--;
+            newX--;
+            break;
+          case "UpRight":
+            newY--;
+            newX++;
+            break;
+          case "DownRight":
+            newY++;
+            newX++;
+            break;
+          case "DownLeft":
+            newY++;
+            newX--;
+            break;
+        }
+
+        if (newY >= 0 && newY <= 99 && newX >= 0 && newX <= 99)
+        {
+          user.PositionY = newY;
+          user.PositionX = newX;
+          success = true;
+
+          _db.SaveChanges();
+        }
+        else
+        {
+          message = "BAD MOVE!  Please make a valid move, you can't leave the board!";
+          success = false;
+        }
+
+        return new UserPositionViewModel(user, message, success);
+      }
+
+      return new UserPositionViewModel();
     }
   }
 }
