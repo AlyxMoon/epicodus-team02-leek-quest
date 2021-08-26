@@ -17,10 +17,12 @@ namespace LeekQuest.Controllers
   [Route("/api/[controller]")]
   public class UsersController : Controller
   {
+    private readonly UserManager<User> _userManager;
     private readonly LeekQuestContext _db;
 
-    public UsersController(LeekQuestContext db)
+    public UsersController(LeekQuestContext db, UserManager<User> userManager)
     {
+      _userManager = userManager;
       _db = db;
     }
 
@@ -43,7 +45,7 @@ namespace LeekQuest.Controllers
     [Authorize]
     public async Task<ActionResult<UserViewModel>> GetUser(string id)
     {
-        var user = await _db.Users.FindAsync(id);
+        User user = await _db.Users.FindAsync(id);
 
         if (user == null)
         {
@@ -55,20 +57,25 @@ namespace LeekQuest.Controllers
 
     // Post: api/Users/"id"/position
     [HttpPost("{id}/position")]
-    // [Authorize]
+    [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
 
-    public async Task<ActionResult<UserViewModel>> MovePlayer(string id, string direction)
+    public async Task<ActionResult<UserPositionViewModel>> MovePlayer(string id, string direction)
     {
-      var user = await _db.Users.FindAsync(id);
+      // need to figure out how to get the current user info... maybe userManager?
+      User user = await _db.Users.FindAsync(id);
+      User thisUser = new ();
+      User result = await _userManager.FindByIdAsync(id);
 
-      if (user == null)
+      var userId = this.User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+//     var currentUser = await _userManager.FindByIdAsync(userId);
+      if (result == null)
         {
             return NotFound();
         }
 
-      // if User.Identity.IsAuthenticated ...?
-      var newX = user.PositionX;
-      var newY = user.PositionY;
+      int newX = user.PositionX;
+      int newY = user.PositionY;
+      string message = "Nice Move...";
       switch (direction)
       {
         case "Up":
@@ -101,11 +108,39 @@ namespace LeekQuest.Controllers
           break;
       }
 
-      user.PositionX = newX;
-      user.PositionY = newY;
+      if (newY >= 0 && newY <= 99 && newX >= 0 && newX <= 99)
+      {
+        user.PositionY = newY;
+        user.PositionX = newX;
+      }
+      else
+      {
+        message = "Please make a valid move, you can't leave the board!";
+      }
+
       _db.SaveChanges();
 
-      return new UserViewModel(user);
+      return new UserPositionViewModel(user, message);
+    }
+
+    [HttpGet("poop")]
+    [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
+    public async Task<UserViewModel> GetAuthenticatedUser([FromHeader] string authorization)
+    {
+      if (AuthenticationHeaderValue.TryParse(authorization, out AuthenticationHeaderValue headerValue))
+      {
+        string parameter = headerValue.Parameter;
+        JwtSecurityTokenHandler handler = new ();
+        JwtSecurityToken token = handler.ReadJwtToken(parameter);
+
+        string username = token.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Name).Value;
+
+        User user = await _userManager.FindByNameAsync(username);
+
+        return new UserViewModel(user);
+      }
+
+      return new UserViewModel();
     }
   }
 }
