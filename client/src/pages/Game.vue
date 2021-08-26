@@ -96,8 +96,8 @@ export default {
       let direction = ''
       if (row === this.position[1] - 1) direction += 'Up'
       if (row === this.position[1] + 1) direction += 'Down'
-      if (col === this.position[0] + 1) direction += 'Left'
-      if (row === this.position[0] + 1) direction += 'Right'
+      if (col === this.position[0] - 1) direction += 'Left'
+      if (col === this.position[0] + 1) direction += 'Right'
 
       this.updateUserPosition(direction)
     }
