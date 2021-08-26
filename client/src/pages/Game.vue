@@ -16,12 +16,21 @@
       <LeekIcon v-if="isPlayerAtPosition(i - 1)" />
     </div>
   </div>
-    <div class="showLeeks">{{ userList }}</div>
+
+  <h3>User List</h3>
+  <ol>
+    <li
+      v-for="user of userList"
+      :key="user.id"
+    >
+      {{ user.userName }}
+    </li>
+  </ol>
 
 </template>
 
 <script>
-import { mapActions, mapState, mapMutations } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import LeekIcon from '../components/LeekIcon'
 
 export default {
@@ -58,25 +67,16 @@ export default {
     },
   },
 
+  created () {
+    this.getLeekList()
+  },
+
   methods: {
-    // ...mapActions([]),
     ...mapActions(['leekUserList', 'updateUserPosition']),
-    ...mapMutations(['setUserList']),
 
     async getLeekList () {
-      const response = await this.leekUserList({
-        userList: this.userList,
-      })
-      console.log("do i get anything?", response);
-      // if (response.userName) {
-        
-      // }
-      // else {
-      //   this.error = "failed to log in; please try again"
-      // }
+      await this.leekUserList()
     },
-  
-
 
     getRowFromIndex (index) {
       return Math.floor(index / this.boardSize)

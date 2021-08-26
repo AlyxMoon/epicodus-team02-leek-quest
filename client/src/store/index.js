@@ -80,15 +80,11 @@ const actions = {
     }
   },
 
-  async leekUserList (context, args) {
-    context.state
-
+  async leekUserList (context) {
     // do whatever we need to get the user list from server
-    let userList = await apiLeekUserList({
+    const userList = await apiLeekUserList(context.state.token)
 
-    }) // whatever
-
-    context.commit('mymutation', userList)
+    context.commit('setUserList', userList)
   }
 }
 
@@ -99,6 +95,10 @@ const mutations = {
 
   setUser (state, user) {
     state.user = user
+  },
+
+  setUserList (state, userList) {
+    state.userList = userList
   },
 }
 

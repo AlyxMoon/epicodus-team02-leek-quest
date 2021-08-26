@@ -27,7 +27,6 @@ export default {
 
   created () {
     this.getTokenAuthData()
-    this.getLeekList()
   },
 
   methods: {
