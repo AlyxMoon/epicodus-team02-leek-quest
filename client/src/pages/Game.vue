@@ -59,8 +59,8 @@ export default {
   },
 
   methods: {
-    ...mapActions(['leekUserList']),
-    ...mapActions(['updateUserPosition']),
+    // ...mapActions([]),
+    ...mapActions(['leekUserList', 'updateUserPosition']),
     ...mapMutations(['setUserList']),
 
     async getLeekList () {
