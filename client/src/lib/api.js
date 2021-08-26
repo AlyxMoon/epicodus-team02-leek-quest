@@ -37,3 +37,15 @@ export const getTokenAuthData = async (token) => {
 
   return response.json()
 }
+
+export const updateUserPosition = async ({ userId, token, direction }) => {
+  const response = await fetch(`http://localhost:5000/users/${userId}/position`, {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${token}`,
+    },
+    body: JSON.stringify({ direction })
+  })
+
+  return response.json()
+}

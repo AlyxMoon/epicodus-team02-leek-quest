@@ -2,6 +2,7 @@ import { createStore } from 'vuex'
 import { 
   loginUser as apiLoginUser,
   getTokenAuthData as apiGetTokenAuthData,
+  updateUserPosition as apiUpdateUserPosition,
 } from '@/lib/api'
 
 const state = {
@@ -57,7 +58,21 @@ const actions = {
       window.localStorage.removeItem('token')
       context.commit('setToken', '')
     }
-  }
+  },
+
+  async updateUserPosition (context, direction) {
+    const response = await apiUpdateUserPosition({ 
+      userId: context.state.user.id,
+      token: context.state.token,
+      direction,
+    })
+
+    context.commit('setUser', {
+      ...context.state.user,
+      positionX: response.positionX,
+      positionY: response.positionY,
+    })
+  },
 }
 
 const mutations = {
