@@ -16,9 +16,10 @@
     >
       <LeekIcon v-if="isPlayerAtPosition(i - 1)" />
 
-      <template v-if="getOtherPlayersAtPosition(i - 1).length > 0">
-        <LeekIcon />
-      </template>
+      <LeekIcon 
+        v-for="user in getOtherPlayersAtPosition(i - 1)"
+        :key="user.id"
+      />
     </div>
   </div>
 
@@ -47,6 +48,7 @@ export default {
 
   data: () => ({
     boardSize: 20,
+    intervalId: 0,
   }),
 
   computed: {
@@ -75,6 +77,18 @@ export default {
 
   created () {
     this.getLeekList()
+
+    if (this.intervalId) {
+      window.clearInterval(this.intervalId)
+    }
+
+    this.intervalId = window.setInterval(() => {
+      this.getLeekList()
+    }, 5000)
+  },
+
+  beforeUnmount () {
+    window.clearInterval(this.intervalId)
   },
 
   methods: {
@@ -173,6 +187,11 @@ export default {
   user-select: none;
 }
 
+.cell.can-move-to {
+  background-color: #DDD;
+  cursor: pointer;
+}
+
 .cell.has-other-players {
   background-color: #444;
 }
@@ -181,20 +200,7 @@ export default {
   background-color: black;
 }
 
-.cell.can-move-to {
-  background-color: #DDD;
-  cursor: pointer;
-}
-
 .position {
   font-size: 0.7em;
-}
-
-html{
-    background: radial-gradient(
-    circle,
-    rgba(124, 219, 116, 0.936) 31%,
-    rgba(41, 210, 52, 0.8748541652989321) 100%
-  );
 }
 </style>
