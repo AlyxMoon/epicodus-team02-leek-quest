@@ -70,7 +70,7 @@ namespace LeekQuest.Controllers
         string username = token.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Name).Value;
 
         User user = await _userManager.FindByNameAsync(username);
-
+        bool success = true;
         int newX = user.PositionX;
         int newY = user.PositionY;
         string message = "Nice Move...";
@@ -110,14 +110,17 @@ namespace LeekQuest.Controllers
         {
           user.PositionY = newY;
           user.PositionX = newX;
+          success = true;
+
           _db.SaveChanges();
         }
         else
         {
-          message = "Please make a valid move, you can't leave the board!";
+          message = "BAD MOVE!  Please make a valid move, you can't leave the board!";
+          success = false;
         }
 
-        return new UserPositionViewModel(user, message);
+        return new UserPositionViewModel(user, message, success);
       }
 
       return new UserPositionViewModel();
