@@ -13,8 +13,7 @@
 </template>
 
 <script>
-import { mapState, mapMutations } from 'vuex'
-import { loginUser } from '../lib/api'
+import { mapActions, mapState, mapMutations } from 'vuex'
 
 export default {
   name: 'LoginPage',
@@ -29,13 +28,16 @@ export default {
     }),
   },
   methods: {
+    ...mapActions(['loginUser']),
     ...mapMutations(['setUser']),
 
     async handleFormSubmit () {
-      let response = await loginUser(this.username, this.password)
+      const response = await this.loginUser({
+        username: this.username,
+        password: this.password,
+      })
 
       if (response.result.succeeded) {
-        this.setUser({ username: this.username })
         this.$router.push('/game')
       }
       else {

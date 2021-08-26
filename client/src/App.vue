@@ -1,4 +1,4 @@
-r<template>
+<template>
   <h1>Application</h1>
 
   <nav>
@@ -7,14 +7,14 @@ r<template>
     <router-link to="/register">Register</router-link>
     <router-link to="/login">Log In</router-link>
 
-    {{ user.username }}
+    <span>{{ user && user.userName }}</span>
   </nav>
   
   <router-view />
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapActions, mapState } from 'vuex'
 
 export default {
   name: 'App',
@@ -22,6 +22,14 @@ export default {
     ...mapState({
       user: 'user',
     }),
+  },
+
+  created () {
+    this.getTokenAuthData()
+  },
+
+  methods: {
+    ...mapActions(['getTokenAuthData']),
   },
 }
 </script>

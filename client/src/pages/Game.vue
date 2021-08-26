@@ -5,20 +5,21 @@
   >
     <div 
       class="cell" 
-      :class="{ active: isPlayerAtPosition(i - 1) }"
+      :class="{ 
+        active: isPlayerAtPosition(i - 1),
+        'can-move-to': isNextToPlayerPosition(i - 1),
+      }"
       v-for="i of (boardSize * boardSize)"
       :key="i"
       @click="handleCellClick(i - 1)"
     >
       <LeekIcon v-if="isPlayerAtPosition(i - 1)" />
-      <span v-else class="position">
-        {{ getRowFromIndex(i - 1)}},{{ getColFromIndex(i - 1) }}
-      </span>
     </div>
   </div>
 </template>
 
 <script>
+import { mapActions, mapState } from 'vuex'
 import LeekIcon from '../components/LeekIcon'
 
 export default {
@@ -30,10 +31,16 @@ export default {
 
   data: () => ({
     boardSize: 20,
-    position: [0, 0],
   }),
 
   computed: {
+    ...mapState({
+      position: ({ user }) => {
+        if (!user) return [0, 0]
+        return [user.positionX, user.positionY]
+      }
+    }),
+
     positionText () {
       const row = this.position[0]
       const col = this.position[1]
@@ -48,6 +55,8 @@ export default {
   },
 
   methods: {
+    ...mapActions(['updateUserPosition']),
+
     getRowFromIndex (index) {
       return Math.floor(index / this.boardSize)
     },
@@ -60,8 +69,21 @@ export default {
       const row = this.getRowFromIndex(index)
       const col = this.getColFromIndex(index)
       return (
-        row === this.position[0] && 
-        col === this.position[1]
+        row === this.position[1] && 
+        col === this.position[0]
+      )
+    },
+
+    isNextToPlayerPosition (index) {
+      const [x, y] = this.position
+
+      const row = this.getRowFromIndex(index)
+      const col = this.getColFromIndex(index)
+
+      if (col === x && row === y) return false
+      return (
+        (col >= x - 1 && col <= x + 1) &&
+        (row >= y - 1 && row <= y + 1)
       )
     },
 
@@ -69,8 +91,15 @@ export default {
       const row = this.getRowFromIndex(index)
       const col = this.getColFromIndex(index)
 
-      this.position[0] = row
-      this.position[1] = col
+      if (!this.isNextToPlayerPosition(index)) return
+
+      let direction = ''
+      if (row === this.position[1] - 1) direction += 'Up'
+      if (row === this.position[1] + 1) direction += 'Down'
+      if (col === this.position[0] + 1) direction += 'Left'
+      if (row === this.position[0] + 1) direction += 'Right'
+
+      this.updateUserPosition(direction)
     }
   }
 }
@@ -101,12 +130,17 @@ export default {
 
   background-color: white;
 
-  cursor: pointer;
+  cursor: default;
   user-select: none;
 }
 
 .cell.active {
   background-color: black;
+}
+
+.cell.can-move-to {
+  background-color: #DDD;
+  cursor: pointer;
 }
 
 .position {
