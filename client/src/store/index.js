@@ -61,17 +61,21 @@ const actions = {
   },
 
   async updateUserPosition (context, direction) {
-    const response = await apiUpdateUserPosition({ 
-      userId: context.state.user.id,
-      token: context.state.token,
-      direction,
-    })
-
-    context.commit('setUser', {
-      ...context.state.user,
-      positionX: response.positionX,
-      positionY: response.positionY,
-    })
+    try {
+      const response = await apiUpdateUserPosition({ 
+        userId: context.state.user.id,
+        token: context.state.token,
+        direction,
+      })
+  
+      context.commit('setUser', {
+        ...context.state.user,
+        positionX: response.positionX,
+        positionY: response.positionY,
+      })
+    } catch (error) {
+      console.error('error updateUserPosition: ', error)
+    }
   },
 }
 
