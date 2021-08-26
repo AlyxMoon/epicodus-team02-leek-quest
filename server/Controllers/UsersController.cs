@@ -59,7 +59,7 @@ namespace LeekQuest.Controllers
     [HttpPost("position")]
     [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
 
-    public async Task<ActionResult<UserPositionViewModel>> MovePlayer([FromHeader] string authorization, string direction)
+    public async Task<ActionResult<UserPositionViewModel>> MovePlayer([FromHeader] string authorization, RequestUserPositionViewModel requestStuff)
     {
       if (AuthenticationHeaderValue.TryParse(authorization, out AuthenticationHeaderValue headerValue))
       {
@@ -70,11 +70,12 @@ namespace LeekQuest.Controllers
         string username = token.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Name).Value;
 
         User user = await _userManager.FindByNameAsync(username);
+
         bool success = true;
         int newX = user.PositionX;
         int newY = user.PositionY;
         string message = "Nice Move...";
-        switch (direction)
+        switch (requestStuff.Direction)
         {
           case "Up":
             newY--;
