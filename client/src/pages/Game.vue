@@ -13,6 +13,7 @@
       v-for="i of (boardSize * boardSize)"
       :key="i"
       @click="handleCellClick(i - 1)"
+      :title="getOtherPlayersAtPosition(i - 1).map(user => user.userName).join(', ')"
     >
       <LeekIcon v-if="isPlayerAtPosition(i - 1)" />
 
