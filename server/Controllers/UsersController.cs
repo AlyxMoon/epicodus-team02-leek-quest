@@ -125,25 +125,5 @@ namespace LeekQuest.Controllers
 
       return new UserPositionViewModel();
     }
-
-    [HttpGet("poop")]
-    [Authorize(AuthenticationSchemes = Microsoft.AspNetCore.Authentication.JwtBearer.JwtBearerDefaults.AuthenticationScheme)]
-    public async Task<UserViewModel> GetAuthenticatedUser([FromHeader] string authorization)
-    {
-      if (AuthenticationHeaderValue.TryParse(authorization, out AuthenticationHeaderValue headerValue))
-      {
-        string parameter = headerValue.Parameter;
-        JwtSecurityTokenHandler handler = new ();
-        JwtSecurityToken token = handler.ReadJwtToken(parameter);
-
-        string username = token.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Name).Value;
-
-        User user = await _userManager.FindByNameAsync(username);
-
-        return new UserViewModel(user);
-      }
-
-      return new UserViewModel();
-    }
   }
 }
