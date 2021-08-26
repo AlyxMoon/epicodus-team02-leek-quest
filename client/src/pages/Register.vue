@@ -1,5 +1,5 @@
 <template>
-  <h1>Register Page!</h1>
+  <h1>Register Your Leek</h1>
   <p>New user, Welcome!</p>
 
   <form @submit.prevent="handleFormSubmit">
