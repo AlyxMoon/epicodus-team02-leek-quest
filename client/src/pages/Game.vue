@@ -7,13 +7,20 @@
       class="cell" 
       :class="{ 
         active: isPlayerAtPosition(i - 1),
+        'has-other-players': getOtherPlayersAtPosition(i - 1).length > 0,
         'can-move-to': isNextToPlayerPosition(i - 1),
       }"
       v-for="i of (boardSize * boardSize)"
       :key="i"
       @click="handleCellClick(i - 1)"
+      :title="getOtherPlayersAtPosition(i - 1).map(user => user.userName).join(', ')"
     >
       <LeekIcon v-if="isPlayerAtPosition(i - 1)" />
+
+      <LeekIcon 
+        v-for="user in getOtherPlayersAtPosition(i - 1)"
+        :key="user.id"
+      />
     </div>
   </div>
 
@@ -42,10 +49,12 @@ export default {
 
   data: () => ({
     boardSize: 20,
+    intervalId: 0,
   }),
 
   computed: {
     ...mapState({
+      user: 'user',
       userList: 'userList',
 
       position: ({ user }) => {
@@ -69,6 +78,18 @@ export default {
 
   created () {
     this.getLeekList()
+
+    if (this.intervalId) {
+      window.clearInterval(this.intervalId)
+    }
+
+    this.intervalId = window.setInterval(() => {
+      this.getLeekList()
+    }, 5000)
+  },
+
+  beforeUnmount () {
+    window.clearInterval(this.intervalId)
   },
 
   methods: {
@@ -93,6 +114,18 @@ export default {
         row === this.position[1] && 
         col === this.position[0]
       )
+    },
+
+    getOtherPlayersAtPosition (index) {
+      const row = this.getRowFromIndex(index)
+      const col = this.getColFromIndex(index)
+
+      return this.userList.filter(user => {
+        return (
+          user.id !== this.user.id &&
+          user.positionX === col && user.positionY === row
+        )
+      })
     },
 
     isNextToPlayerPosition (index) {
@@ -155,13 +188,17 @@ export default {
   user-select: none;
 }
 
-.cell.active {
-  background-color: black;
-}
-
 .cell.can-move-to {
   background-color: #DDD;
   cursor: pointer;
+}
+
+.cell.has-other-players {
+  background-color: #444;
+}
+
+.cell.active {
+  background-color: black;
 }
 
 .position {

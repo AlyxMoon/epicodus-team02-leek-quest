@@ -1,5 +1,5 @@
 <template>
-  <h1>Log in Page!</h1>
+  <h1>Leek Login</h1>
   <p>Log in to join our leek quest</p>
 
   <form @submit.prevent="handleFormSubmit">
@@ -9,43 +9,42 @@
     <input type="password" class="margin" v-model="password" />
     <button type="submit" class="btn">Log In</button>
   </form>
-    <div class="showErrors">{{ error }}</div>
+  <div class="showErrors">{{ error }}</div>
 </template>
 
 <script>
-import { mapActions, mapState, mapMutations } from 'vuex'
+import { mapActions, mapState, mapMutations } from "vuex";
 
 export default {
-  name: 'LoginPage',
+  name: "LoginPage",
   data: () => ({
-    username: '',
-    password: '',
-    error: '',
+    username: "",
+    password: "",
+    error: "",
   }),
   computed: {
     ...mapState({
-      user: 'user',
+      user: "user",
     }),
   },
   methods: {
-    ...mapActions(['loginUser']),
-    ...mapMutations(['setUser']),
+    ...mapActions(["loginUser"]),
+    ...mapMutations(["setUser"]),
 
-    async handleFormSubmit () {
+    async handleFormSubmit() {
       const response = await this.loginUser({
         username: this.username,
         password: this.password,
-      })
+      });
 
       if (response.result.succeeded) {
-        this.$router.push('/game')
+        this.$router.push("/game");
+      } else {
+        this.error = "failed to log in; please try again";
       }
-      else {
-        this.error = "failed to log in; please try again"
-      }
-    }
-  }
-}
+    },
+  },
+};
 </script>
 
 <style scoped>
