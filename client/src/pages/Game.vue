@@ -16,6 +16,17 @@
       <LeekIcon v-if="isPlayerAtPosition(i - 1)" />
     </div>
   </div>
+
+  <h3>User List</h3>
+  <ol>
+    <li
+      v-for="user of userList"
+      :key="user.id"
+    >
+      {{ user.userName }}
+    </li>
+  </ol>
+
 </template>
 
 <script>
@@ -35,6 +46,8 @@ export default {
 
   computed: {
     ...mapState({
+      userList: 'userList',
+
       position: ({ user }) => {
         if (!user) return [0, 0]
         return [user.positionX, user.positionY]
@@ -54,8 +67,16 @@ export default {
     },
   },
 
+  created () {
+    this.getLeekList()
+  },
+
   methods: {
-    ...mapActions(['updateUserPosition']),
+    ...mapActions(['leekUserList', 'updateUserPosition']),
+
+    async getLeekList () {
+      await this.leekUserList()
+    },
 
     getRowFromIndex (index) {
       return Math.floor(index / this.boardSize)

@@ -28,6 +28,17 @@ export const loginUser = async (username, password) => {
   return response.json()
 }
 
+export const leekUserList = async (token) => {
+  const response = await fetch('http://localhost:5000/api/users', {
+    method: 'GET',
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return response.json()
+}
+
 export const getTokenAuthData = async (token) => {
   const response = await fetch('http://localhost:5000/api/auth', {
     headers: {

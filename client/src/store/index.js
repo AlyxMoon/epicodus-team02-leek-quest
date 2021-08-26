@@ -3,11 +3,13 @@ import {
   loginUser as apiLoginUser,
   getTokenAuthData as apiGetTokenAuthData,
   updateUserPosition as apiUpdateUserPosition,
+  leekUserList as apiLeekUserList,
 } from '@/lib/api'
 
 const state = {
   user: {},
   token: '',
+  userList: [],
 }
 
 const getters = {
@@ -77,6 +79,13 @@ const actions = {
       console.error('error updateUserPosition: ', error)
     }
   },
+
+  async leekUserList (context) {
+    // do whatever we need to get the user list from server
+    const userList = await apiLeekUserList(context.state.token)
+
+    context.commit('setUserList', userList)
+  }
 }
 
 const mutations = {
@@ -86,6 +95,10 @@ const mutations = {
 
   setUser (state, user) {
     state.user = user
+  },
+
+  setUserList (state, userList) {
+    state.userList = userList
   },
 }
 
