@@ -1,5 +1,5 @@
 export const registerUser = async (username, password) => {
-  const response = await fetch('http://localhost:5000/api/auth/register', {
+  const response = await fetch('/api/auth/register', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -14,7 +14,7 @@ export const registerUser = async (username, password) => {
 }
 
 export const loginUser = async (username, password) => {
-  const response = await fetch('http://localhost:5000/api/auth/login', {
+  const response = await fetch('/api/auth/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json'
@@ -40,7 +40,7 @@ export const leekUserList = async (token) => {
 }
 
 export const getTokenAuthData = async (token) => {
-  const response = await fetch('http://localhost:5000/api/auth', {
+  const response = await fetch('/api/auth', {
     headers: {
       'Authorization': `Bearer ${token}`,
     },
@@ -50,7 +50,7 @@ export const getTokenAuthData = async (token) => {
 }
 
 export const updateUserPosition = async ({ token, direction }) => {
-  const response = await fetch(`http://localhost:5000/api/users/position`, {
+  const response = await fetch(`/api/users/position`, {
     method: 'POST',
     headers: {
       'Authorization': `Bearer ${token}`,

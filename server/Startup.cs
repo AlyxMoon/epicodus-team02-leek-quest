@@ -87,7 +87,7 @@ namespace LeekQuest
 
       services.AddSpaStaticFiles(configuration =>
       {
-        configuration.RootPath = "../client/build";
+        configuration.RootPath = "../client/dist";
       });
     }
 
